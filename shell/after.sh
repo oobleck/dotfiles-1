@@ -3,23 +3,13 @@
 DKO_SOURCE="${DKO_SOURCE} -> shell/after.sh {"
 
 # ============================================================================
-# Use neovim
-# Now that path is available, use neovim instead of vim if it is installed
+# fnm
 # ============================================================================
 
-__dko_prefer 'nvim' && {
-  e() {
-    nvim "$@"
-  }
-
-  export EDITOR='nvim'
-  export VISUAL='nvim'
-
-  __dko_prefer 'nvr' && {
-    e() {
-      PYTHONWARNINGS=ignore nvr -s "$@"
-    }
-  }
+export FNM_DIR="${HOME}/.local/fnm"
+[ -d "${FNM_DIR}" ] && {
+  export PATH="${FNM_DIR}:${PATH}"
+  eval "$(fnm env)"
 }
 
 # ============================================================================
@@ -41,8 +31,26 @@ __dko_prefer 'trash' && alias rm=trash
 __dko_prefer 'fasd' && alias j='z'
 
 # ============================================================================
+# Use neovim
+# Now that path is available, use neovim instead of vim if it is installed
+# ============================================================================
 
-#__dko_has 'catimg' && echo && catimg "${DOTFILES}/meta/motd.png" && echo
+__dko_prefer 'nvim' && {
+  e() {
+    nvim "$@"
+  }
+
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+
+  __dko_prefer 'nvr' && {
+    e() {
+      PYTHONWARNINGS=ignore nvr -s "$@"
+    }
+  }
+}
+
+# ============================================================================
 
 unset DKO_INIT
 export DKO_SOURCE="${DKO_SOURCE} }"
