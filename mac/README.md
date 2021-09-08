@@ -24,9 +24,11 @@ everything.
     - [Xcode]: select CLI tools in prefs
         - This is __required__ to build some apps like neovim@HEAD
 
-## Install homebrew
+## Setup ssh keys
 
-1. Install according to <https://brew.sh/>. Install bundles in a later step.
+1. `sshkeygen` (alias to generate new ed25519 keys)
+1. Add the public key to GitHub, GitLab, Bitbucket, etc.
+1. `ssh-add -K ~/.ssh/privatekeyfile` to store the key in Keychain.
 
 ## Install dotfiles
 
@@ -34,7 +36,9 @@ everything.
 git clone https://github.com/davidosomething/dotfiles.git ~/.dotfiles/
 ```
 
-## Run bootstrap/mac
+## Install homebrew and bootstrap
+
+Install homebrew according to <https://brew.sh/>.
 
 Mojave no longer installs SDK headers for building certain things. It comes
 with mac OS but requires manual execution. Use
@@ -47,11 +51,10 @@ with mac OS but requires manual execution. Use
 The script will also:
 
 - load the `dotfiles.plist`
+    - It sets `GNUPGHOME` in the env for all apps
 - `brew bundle` some default packages
 - Run the fzf installer
 - Change the user's default shell to the brewed `zsh`
-
-### System-specific
 
 Bundle dumps for specific systems are in my `~/.secret` (not public).
 
@@ -102,19 +105,6 @@ Mackup is configured to use `~/.local/Mackup` as the storage location. On my
 system this is a symlink to a private settings repository.
 
 Run `mackup restore` to restore settings from that repository.
-
-## Install GPGTools and import key
-
-1. Install the [dotfiles.plist](LaunchAgents/dotfiles.plist) first! It sets
-   `GNUPGHOME` in the env for all apps. See the bootstrapping section above.
-1. Follow these instructions
-   <https://gist.github.com/danieleggert/b029d44d4a54b328c0bac65d46ba4c65>  
-
-## Setup ssh keys
-
-1. `sshkeygen` (alias to generate new ed25519 keys)
-1. Add the public key to GitHub, GitLab, Bitbucket, etc.
-1. `ssh-add -K ~/.ssh/privatekeyfile` to store the key in Keychain.
 
 ## Install development tools
 
